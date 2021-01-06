@@ -18,7 +18,6 @@ void showMainMenu(int &choice)
 	{
 		cout << "Invalid entry." << endl;
 		cin.clear();
-		//  cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		showMainMenu(choice);
 	}
 
@@ -42,30 +41,17 @@ void studentMenu(int &choice)
 
 void teacherMenu(int &choice)
 {
-	cout << "Submenu 2 of Main Menu" << endl;
-	cout << "\t1) Choice 1" << endl;
-	cout << "\t2) Choice 2" << endl;
-	cout << "\t3) Choice 3" << endl;
-	if (!(cin >> choice) || choice < 1 || choice > 3)
-	{
-		cout << "Invalid entry." << endl;
-		cin.clear();
-		// cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-		teacherMenu(choice);
-	}
-}
+	cout<<"\nPress 1 for entering Teacher information"<<endl;
+	cout<<"Press 2 for listing Teacher."<<endl;
 
-void schoolMenu(int &choice)
-{
-	cout << "Submenu 2 of Main Menu" << endl;
-	cout << "\t1) Choice 1" << endl;
-	cout << "\t2) Choice 2" << endl;
-	cout << "\t3) Choice 3" << endl;
+	cout<<"Press 3 for exit"<<endl<<endl;
+	cout<<"----------------------------------"<<endl;
+
 	if (!(cin >> choice) || choice < 1 || choice > 3)
 	{
-		cout << "Invalid entry." << endl;
+		cout << "\n\n\t Invalid entry." << endl<<endl;
 		cin.clear();
-		// cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
 		teacherMenu(choice);
 	}
 }
@@ -74,7 +60,7 @@ void schoolMenu(int &choice)
 void enterStudentInfo (Database& d)
 {
 	string name, pid, group,gender;
-    int num;
+	int num;
 	bool entry=true;
 	while(entry)
 	{
@@ -90,7 +76,7 @@ void enterStudentInfo (Database& d)
 		cin>>pid;
 
 		cout<<"Enter group:  \n";
-				cin>>group;
+		cin>>group;
 
 
 		Student s(pid, name, gender, group );
@@ -101,47 +87,55 @@ void enterStudentInfo (Database& d)
 		entry=(num==1)?true:false;
 
 	}
-//	studentMenu(choice);
+
 
 }
 
 
 
-//void operateStudentOption(int ch, Database& d)
-//{
-//	int menuChoice;
-//	switch(ch)
-//	{
-//	case 1:
-//		enterStudentInfo(d);
-//
-//		break;
-//
-//	case 2:
-//		d.showStudent();
-//		break;
-//
-//	case 3:
-//		//1exit(0);
-//		menuChoice=showMainMenu();
-//		//				exit(0);
-//		break;
-//
-//	default:
-//		cout<<"invalid entry.. pls try again "<<endl<<endl;
-//		ch=studentMenu();
-//
-//
-//	}
-//	ch=studentMenu();
-//}
+void enterTeacherInfo (Database& d)
+{
+	string name, pid, group,gender,position;
+	int num;
+	bool entry=true;
+	while(entry)
+	{
+
+		cout<<"Enter Teacher name: \n";
+
+		cin>>name;
+
+		cout<<"Enter Teacher gender: \n ";
+		cin>>gender;
+
+		cout<<"Enter Teacher pid:  \n";
+		cin>>pid;
+
+		cout<<"Enter group:  \n";
+		cin>>group;
+
+		cout<<"Enter teacher Position:  \n";
+		cin>>position;
+
+
+		Teacher t(pid, name, gender, group,position );
+		d.addTeacher(t);
+
+		cout<<"do you want to enter more teacher information press 1 for yes and 0 for false\n";
+		cin>>num;
+		entry=(num==1)?true:false;
+
+	}
+
+}
+
 
 int main() {
 	Database d;
 
 	cout<<"********* WELCOME TO SCHOOL ENTRY RECORD SYSTEM FOR SS COMUNITY **********"<<endl<<endl;
 
-	int choice,studentchoice;
+	int choice,studentchoice,teacherchoice;
 	do
 	{
 
@@ -151,9 +145,9 @@ int main() {
 		case 1:
 		{
 			do{
-			studentMenu(studentchoice);
-			switch(studentchoice)
-			{
+				studentMenu(studentchoice);
+				switch(studentchoice)
+				{
 				case 1:
 				{
 					cout<<"here comes the function to enter student info"<<endl;
@@ -174,58 +168,46 @@ int main() {
 					break;
 				}
 
-			}
+				}
 			}while (studentchoice != 0);
 
 			break;
 		}
 		case 2:
 		{
-			teacherMenu(choice);
-			switch(choice)
-			{
-			case 1:
-			{
-				cout<<"here comes the function to enter TEACHER info"<<endl;
-				break;
-			}
-			case 2:
-			{
-				cout<<"here comes the function to listing TEACHER info"<<endl;
-				break;
-			}
-			case 3:
-			{
-				cout<<"here comes the function to exiting to MAIN MENU"<<endl;
+			do{
+				teacherMenu(teacherchoice);
 
-				choice = 0;
-				break;
-			}
-			}
+				switch(teacherchoice)
+				{
+					case 1:
+					{
+						cout<<"here comes the function to enter TEACHER info"<<endl;
+						enterTeacherInfo(d);
+						break;
+					}
+					case 2:
+					{
+						cout<<"here comes the function to listing TEACHER info"<<endl;
+						d.listTeacher();
+						break;
+					}
+					case 3:
+					{
+						cout<<"here comes the function to exiting to MAIN MENU"<<endl;
+
+						teacherchoice = 0;
+						break;
+					}
+				}
+			}while(teacherchoice != 0 );
 			break;
 		}
 
 		case 3:
 		{
-			schoolMenu(choice);
-			switch(choice)
-			{
-			case 1:
-			{
-				cout<<"here comes the function to enter SCHOOL info"<<endl;
-				break;
-			}
-			case 2:
-			{
-				cout<<"here comes the function to listing SCHOOL info"<<endl;
-				break;
-			}
-			case 3:
-			{
-				cout<<"here comes the function to exiting to MAIN MENU"<<endl;
-				break;
-			}
-			}
+
+			cout<<"\n\n......WORK IN PROGRESS...."<<endl<<endl;
 			break;
 		}
 
@@ -238,49 +220,7 @@ int main() {
 
 
 
-	//	menuChoice=showMenu();
-	//while(menuChoice!=0){
-	//	switch(menuChoice)
-	//	{
-	//	case 1:
-	//
-	//		//showStudentMenu(d);
-	//		int ch;
-	//		ch=studentMenu();
-	//
-	//
-	//		while(ch!=0)
-	//		{
-	//			operateStudentOption(ch,d);
-	//
-	//		}
-	//
-	//		break;
-	//
-	//	case 2:
-	//
-	//		cout<<"\n\n work in progress..."<<endl<<endl;
-	//
-	//		break;
-	//
-	//	case 3:
-	//		cout<<"\n\n work in progress..."<<endl<<endl;
-	//
-	//		break;
-	//
-	//	case 4:
-	//		cout<<"exiting from whole project...."<<endl<<endl;
-	//		exit(0);
-	//
-	//		break;
-	//
-	//	default:
-	//		cout<<"invalid entry.. pls try again "<<endl<<endl<<showMenu();
-
-//}
-//}
-//
-cout<<"\n its end\n";
-return 0;
+	cout<<"\n its the end \n";
+	return 0;
 
 }
